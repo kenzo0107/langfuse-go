@@ -54,7 +54,7 @@ func (c *Client) GetDatasets(ctx context.Context, opts *GetDatasetsOptions) (*Ge
 	}
 
 	r := new(GetDatasetsOutput)
-	if err := c.Do(ctx, req, r); err != nil {
+	if err = c.Do(ctx, req, r); err != nil {
 		return nil, err
 	}
 
@@ -71,7 +71,7 @@ func (c *Client) GetDataset(ctx context.Context, datasetName string) (*Dataset, 
 	}
 
 	r := new(Dataset)
-	if err := c.Do(ctx, req, r); err != nil {
+	if err = c.Do(ctx, req, r); err != nil {
 		return nil, err
 	}
 
@@ -93,7 +93,7 @@ func (c *Client) CreateDataset(ctx context.Context, input *CreateDatasetInput) (
 	}
 
 	r := new(Dataset)
-	if err := c.Do(ctx, req, r); err != nil {
+	if err = c.Do(ctx, req, r); err != nil {
 		return nil, err
 	}
 
@@ -123,7 +123,7 @@ type GetDatasetItemsOutput struct {
 
 // GetDatasetItemsOptions are the query parameters for listing dataset items.
 type GetDatasetItemsOptions struct {
-	DatasetName *string `url:"datasetName,omitempty"`
+	DatasetName         *string `url:"datasetName,omitempty"`
 	SourceTraceID       *string `url:"sourceTraceId,omitempty"`
 	SourceObservationID *string `url:"sourceObservationId,omitempty"`
 	Page                *int    `url:"page,omitempty"`
@@ -147,7 +147,7 @@ func (c *Client) GetDatasetItems(ctx context.Context, opts *GetDatasetItemsOptio
 	}
 
 	r := new(GetDatasetItemsOutput)
-	if err := c.Do(ctx, req, r); err != nil {
+	if err = c.Do(ctx, req, r); err != nil {
 		return nil, err
 	}
 
@@ -164,7 +164,7 @@ func (c *Client) GetDatasetItem(ctx context.Context, itemID string) (*DatasetIte
 	}
 
 	r := new(DatasetItem)
-	if err := c.Do(ctx, req, r); err != nil {
+	if err = c.Do(ctx, req, r); err != nil {
 		return nil, err
 	}
 
@@ -191,7 +191,7 @@ func (c *Client) CreateDatasetItem(ctx context.Context, input *CreateDatasetItem
 	}
 
 	r := new(DatasetItem)
-	if err := c.Do(ctx, req, r); err != nil {
+	if err = c.Do(ctx, req, r); err != nil {
 		return nil, err
 	}
 

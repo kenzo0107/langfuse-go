@@ -2,12 +2,11 @@ package langfuse
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/http/httputil"
 	"strings"
-
-	"github.com/pkg/errors"
 )
 
 // ErrorResponse is the single-error response format.

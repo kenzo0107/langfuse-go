@@ -58,16 +58,16 @@ type GetObservationsOutput struct {
 
 // GetObservationsOptions are the query parameters for listing observations.
 type GetObservationsOptions struct {
-	Page          *int             `url:"page,omitempty"`
-	Limit         *int             `url:"limit,omitempty"`
-	Type          *ObservationType `url:"type,omitempty"`
-	Name          *string          `url:"name,omitempty"`
-	TraceID       *string          `url:"traceId,omitempty"`
-	ParentObservationID *string    `url:"parentObservationId,omitempty"`
-	FromStartTime *time.Time       `url:"fromStartTime,omitempty"`
-	ToStartTime   *time.Time       `url:"toStartTime,omitempty"`
-	Model         *string          `url:"model,omitempty"`
-	Environment   *string          `url:"environment,omitempty"`
+	Page                *int             `url:"page,omitempty"`
+	Limit               *int             `url:"limit,omitempty"`
+	Type                *ObservationType `url:"type,omitempty"`
+	Name                *string          `url:"name,omitempty"`
+	TraceID             *string          `url:"traceId,omitempty"`
+	ParentObservationID *string          `url:"parentObservationId,omitempty"`
+	FromStartTime       *time.Time       `url:"fromStartTime,omitempty"`
+	ToStartTime         *time.Time       `url:"toStartTime,omitempty"`
+	Model               *string          `url:"model,omitempty"`
+	Environment         *string          `url:"environment,omitempty"`
 }
 
 // GetObservations returns a paginated list of observations.
@@ -87,7 +87,7 @@ func (c *Client) GetObservations(ctx context.Context, opts *GetObservationsOptio
 	}
 
 	r := new(GetObservationsOutput)
-	if err := c.Do(ctx, req, r); err != nil {
+	if err = c.Do(ctx, req, r); err != nil {
 		return nil, err
 	}
 
@@ -104,7 +104,7 @@ func (c *Client) GetObservation(ctx context.Context, observationID string) (*Obs
 	}
 
 	r := new(Observation)
-	if err := c.Do(ctx, req, r); err != nil {
+	if err = c.Do(ctx, req, r); err != nil {
 		return nil, err
 	}
 

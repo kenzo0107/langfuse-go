@@ -28,25 +28,25 @@ const (
 
 // Score represents a Langfuse score.
 type Score struct {
-	ID             string        `json:"id"`
-	Name           string        `json:"name"`
-	Source         ScoreSource   `json:"source"`
-	DataType       *ScoreDataType `json:"dataType,omitempty"`
-	Value          *float64      `json:"value,omitempty"`
-	StringValue    *string       `json:"stringValue,omitempty"`
-	TraceID        *string       `json:"traceId,omitempty"`
-	SessionID      *string       `json:"sessionId,omitempty"`
-	ObservationID  *string       `json:"observationId,omitempty"`
-	DatasetRunID   *string       `json:"datasetRunId,omitempty"`
-	Comment        *string       `json:"comment,omitempty"`
-	Metadata       any           `json:"metadata,omitempty"`
-	ConfigID       *string       `json:"configId,omitempty"`
-	QueueID        *string       `json:"queueId,omitempty"`
-	AuthorUserID   *string       `json:"authorUserId,omitempty"`
-	Environment    string        `json:"environment"`
-	Timestamp      time.Time     `json:"timestamp"`
-	CreatedAt      time.Time     `json:"createdAt"`
-	UpdatedAt      time.Time     `json:"updatedAt"`
+	ID            string         `json:"id"`
+	Name          string         `json:"name"`
+	Source        ScoreSource    `json:"source"`
+	DataType      *ScoreDataType `json:"dataType,omitempty"`
+	Value         *float64       `json:"value,omitempty"`
+	StringValue   *string        `json:"stringValue,omitempty"`
+	TraceID       *string        `json:"traceId,omitempty"`
+	SessionID     *string        `json:"sessionId,omitempty"`
+	ObservationID *string        `json:"observationId,omitempty"`
+	DatasetRunID  *string        `json:"datasetRunId,omitempty"`
+	Comment       *string        `json:"comment,omitempty"`
+	Metadata      any            `json:"metadata,omitempty"`
+	ConfigID      *string        `json:"configId,omitempty"`
+	QueueID       *string        `json:"queueId,omitempty"`
+	AuthorUserID  *string        `json:"authorUserId,omitempty"`
+	Environment   string         `json:"environment"`
+	Timestamp     time.Time      `json:"timestamp"`
+	CreatedAt     time.Time      `json:"createdAt"`
+	UpdatedAt     time.Time      `json:"updatedAt"`
 }
 
 // CreateScoreOutput is the response after creating a score.
@@ -79,7 +79,7 @@ func (c *Client) CreateScore(ctx context.Context, input *CreateScoreInput) (*Cre
 	}
 
 	r := new(CreateScoreOutput)
-	if err := c.Do(ctx, req, r); err != nil {
+	if err = c.Do(ctx, req, r); err != nil {
 		return nil, err
 	}
 
@@ -125,7 +125,7 @@ func (c *Client) GetScores(ctx context.Context, opts *GetScoresOptions) (*GetSco
 	}
 
 	r := new(GetScoresOutput)
-	if err := c.Do(ctx, req, r); err != nil {
+	if err = c.Do(ctx, req, r); err != nil {
 		return nil, err
 	}
 
@@ -142,7 +142,7 @@ func (c *Client) GetScore(ctx context.Context, scoreID string) (*Score, error) {
 	}
 
 	r := new(Score)
-	if err := c.Do(ctx, req, r); err != nil {
+	if err = c.Do(ctx, req, r); err != nil {
 		return nil, err
 	}
 

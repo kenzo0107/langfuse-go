@@ -15,18 +15,18 @@ const (
 
 // CustomModel represents a custom model definition in Langfuse.
 type CustomModel struct {
-	ID                string         `json:"id"`
-	ModelName         string         `json:"modelName"`
-	MatchPattern      string         `json:"matchPattern"`
-	StartDate         *time.Time     `json:"startDate,omitempty"`
+	ID                string          `json:"id"`
+	ModelName         string          `json:"modelName"`
+	MatchPattern      string          `json:"matchPattern"`
+	StartDate         *time.Time      `json:"startDate,omitempty"`
 	Unit              *ModelUsageUnit `json:"unit,omitempty"`
-	InputPrice        *float64       `json:"inputPrice,omitempty"`
-	OutputPrice       *float64       `json:"outputPrice,omitempty"`
-	TotalPrice        *float64       `json:"totalPrice,omitempty"`
-	TokenizerID       *string        `json:"tokenizerId,omitempty"`
-	TokenizerConfig   any            `json:"tokenizerConfig,omitempty"`
-	IsLangfuseManaged bool           `json:"isLangfuseManaged"`
-	CreatedAt         time.Time      `json:"createdAt"`
+	InputPrice        *float64        `json:"inputPrice,omitempty"`
+	OutputPrice       *float64        `json:"outputPrice,omitempty"`
+	TotalPrice        *float64        `json:"totalPrice,omitempty"`
+	TokenizerID       *string         `json:"tokenizerId,omitempty"`
+	TokenizerConfig   any             `json:"tokenizerConfig,omitempty"`
+	IsLangfuseManaged bool            `json:"isLangfuseManaged"`
+	CreatedAt         time.Time       `json:"createdAt"`
 }
 
 // GetCustomModelsOutput is the response for listing custom models.
@@ -58,7 +58,7 @@ func (c *Client) GetCustomModels(ctx context.Context, opts *GetCustomModelsOptio
 	}
 
 	r := new(GetCustomModelsOutput)
-	if err := c.Do(ctx, req, r); err != nil {
+	if err = c.Do(ctx, req, r); err != nil {
 		return nil, err
 	}
 
@@ -75,7 +75,7 @@ func (c *Client) GetCustomModel(ctx context.Context, modelID string) (*CustomMod
 	}
 
 	r := new(CustomModel)
-	if err := c.Do(ctx, req, r); err != nil {
+	if err = c.Do(ctx, req, r); err != nil {
 		return nil, err
 	}
 
@@ -103,7 +103,7 @@ func (c *Client) CreateCustomModel(ctx context.Context, input *CreateCustomModel
 	}
 
 	r := new(CustomModel)
-	if err := c.Do(ctx, req, r); err != nil {
+	if err = c.Do(ctx, req, r); err != nil {
 		return nil, err
 	}
 

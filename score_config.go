@@ -67,7 +67,7 @@ func (c *Client) GetScoreConfigs(ctx context.Context, opts *GetScoreConfigsOptio
 	}
 
 	r := new(GetScoreConfigsOutput)
-	if err := c.Do(ctx, req, r); err != nil {
+	if err = c.Do(ctx, req, r); err != nil {
 		return nil, err
 	}
 
@@ -84,7 +84,7 @@ func (c *Client) GetScoreConfig(ctx context.Context, configID string) (*ScoreCon
 	}
 
 	r := new(ScoreConfig)
-	if err := c.Do(ctx, req, r); err != nil {
+	if err = c.Do(ctx, req, r); err != nil {
 		return nil, err
 	}
 
@@ -109,7 +109,7 @@ func (c *Client) CreateScoreConfig(ctx context.Context, input *CreateScoreConfig
 	}
 
 	r := new(ScoreConfig)
-	if err := c.Do(ctx, req, r); err != nil {
+	if err = c.Do(ctx, req, r); err != nil {
 		return nil, err
 	}
 
@@ -127,7 +127,11 @@ type UpdateScoreConfigInput struct {
 }
 
 // UpdateScoreConfig updates an existing score configuration.
-func (c *Client) UpdateScoreConfig(ctx context.Context, configID string, input *UpdateScoreConfigInput) (*ScoreConfig, error) {
+func (c *Client) UpdateScoreConfig(
+	ctx context.Context,
+	configID string,
+	input *UpdateScoreConfigInput,
+) (*ScoreConfig, error) {
 	path := fmt.Sprintf("/api/public/score-configs/%s", configID)
 
 	req, err := c.NewRequest("PATCH", path, input)
@@ -136,7 +140,7 @@ func (c *Client) UpdateScoreConfig(ctx context.Context, configID string, input *
 	}
 
 	r := new(ScoreConfig)
-	if err := c.Do(ctx, req, r); err != nil {
+	if err = c.Do(ctx, req, r); err != nil {
 		return nil, err
 	}
 

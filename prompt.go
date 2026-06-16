@@ -78,7 +78,7 @@ func (c *Client) GetPrompts(ctx context.Context, opts *GetPromptsOptions) (*GetP
 	}
 
 	r := new(GetPromptsOutput)
-	if err := c.Do(ctx, req, r); err != nil {
+	if err = c.Do(ctx, req, r); err != nil {
 		return nil, err
 	}
 
@@ -108,7 +108,7 @@ func (c *Client) GetPrompt(ctx context.Context, name string, opts *GetPromptOpti
 	}
 
 	r := new(Prompt)
-	if err := c.Do(ctx, req, r); err != nil {
+	if err = c.Do(ctx, req, r); err != nil {
 		return nil, err
 	}
 
@@ -138,7 +138,7 @@ func (c *Client) CreateTextPrompt(ctx context.Context, input *CreateTextPromptIn
 	}
 
 	r := new(Prompt)
-	if err := c.Do(ctx, req, r); err != nil {
+	if err = c.Do(ctx, req, r); err != nil {
 		return nil, err
 	}
 
@@ -166,7 +166,7 @@ func (c *Client) CreateChatPrompt(ctx context.Context, input *CreateChatPromptIn
 	}
 
 	r := new(Prompt)
-	if err := c.Do(ctx, req, r); err != nil {
+	if err = c.Do(ctx, req, r); err != nil {
 		return nil, err
 	}
 

@@ -63,7 +63,7 @@ func (c *Client) GetSessions(ctx context.Context, opts *GetSessionsOptions) (*Ge
 	}
 
 	r := new(GetSessionsOutput)
-	if err := c.Do(ctx, req, r); err != nil {
+	if err = c.Do(ctx, req, r); err != nil {
 		return nil, err
 	}
 
@@ -80,7 +80,7 @@ func (c *Client) GetSession(ctx context.Context, sessionID string) (*SessionDeta
 	}
 
 	r := new(SessionDetail)
-	if err := c.Do(ctx, req, r); err != nil {
+	if err = c.Do(ctx, req, r); err != nil {
 		return nil, err
 	}
 

@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"log"
@@ -13,7 +14,6 @@ import (
 	"reflect"
 
 	"github.com/google/go-querystring/query"
-	"github.com/pkg/errors"
 )
 
 const (
@@ -200,23 +200,29 @@ func (c *Client) Do(ctx context.Context, req *http.Request, v interface{}) error
 		return err
 	}
 
-	if v != nil {
-		if w, ok := v.(io.Writer); ok {
-			if _, er := io.Copy(w, resp.Body); er != nil {
-				return er
-			}
-		} else {
-			decErr := json.NewDecoder(resp.Body).Decode(v)
-			if decErr == io.EOF {
-				decErr = nil
-			}
-			if decErr != nil {
-				err = decErr
-			}
-		}
+	if err = decodeResponse(resp.Body, v); err != nil {
+		return err
 	}
 
 	return err
+}
+
+func decodeResponse(body io.Reader, v interface{}) error {
+	if v == nil {
+		return nil
+	}
+
+	if w, ok := v.(io.Writer); ok {
+		_, err := io.Copy(w, body)
+		return err
+	}
+
+	decErr := json.NewDecoder(body).Decode(v)
+	if errors.Is(decErr, io.EOF) {
+		return nil
+	}
+
+	return decErr
 }
 
 // AddOptions appends struct fields as URL query parameters.

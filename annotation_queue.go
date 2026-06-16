@@ -30,7 +30,10 @@ type GetAnnotationQueuesOptions struct {
 }
 
 // GetAnnotationQueues returns a paginated list of annotation queues.
-func (c *Client) GetAnnotationQueues(ctx context.Context, opts *GetAnnotationQueuesOptions) (*GetAnnotationQueuesOutput, error) {
+func (c *Client) GetAnnotationQueues(
+	ctx context.Context,
+	opts *GetAnnotationQueuesOptions,
+) (*GetAnnotationQueuesOutput, error) {
 	path := "/api/public/annotation-queues"
 	if opts != nil {
 		var err error
@@ -46,7 +49,7 @@ func (c *Client) GetAnnotationQueues(ctx context.Context, opts *GetAnnotationQue
 	}
 
 	r := new(GetAnnotationQueuesOutput)
-	if err := c.Do(ctx, req, r); err != nil {
+	if err = c.Do(ctx, req, r); err != nil {
 		return nil, err
 	}
 
@@ -63,7 +66,7 @@ func (c *Client) GetAnnotationQueue(ctx context.Context, queueID string) (*Annot
 	}
 
 	r := new(AnnotationQueue)
-	if err := c.Do(ctx, req, r); err != nil {
+	if err = c.Do(ctx, req, r); err != nil {
 		return nil, err
 	}
 
@@ -78,14 +81,17 @@ type CreateAnnotationQueueInput struct {
 }
 
 // CreateAnnotationQueue creates a new annotation queue.
-func (c *Client) CreateAnnotationQueue(ctx context.Context, input *CreateAnnotationQueueInput) (*AnnotationQueue, error) {
+func (c *Client) CreateAnnotationQueue(
+	ctx context.Context,
+	input *CreateAnnotationQueueInput,
+) (*AnnotationQueue, error) {
 	req, err := c.NewRequest("POST", "/api/public/annotation-queues", input)
 	if err != nil {
 		return nil, err
 	}
 
 	r := new(AnnotationQueue)
-	if err := c.Do(ctx, req, r); err != nil {
+	if err = c.Do(ctx, req, r); err != nil {
 		return nil, err
 	}
 
@@ -100,7 +106,11 @@ type UpdateAnnotationQueueInput struct {
 }
 
 // UpdateAnnotationQueue updates an existing annotation queue.
-func (c *Client) UpdateAnnotationQueue(ctx context.Context, queueID string, input *UpdateAnnotationQueueInput) (*AnnotationQueue, error) {
+func (c *Client) UpdateAnnotationQueue(
+	ctx context.Context,
+	queueID string,
+	input *UpdateAnnotationQueueInput,
+) (*AnnotationQueue, error) {
 	path := fmt.Sprintf("/api/public/annotation-queues/%s", queueID)
 
 	req, err := c.NewRequest("PATCH", path, input)
@@ -109,7 +119,7 @@ func (c *Client) UpdateAnnotationQueue(ctx context.Context, queueID string, inpu
 	}
 
 	r := new(AnnotationQueue)
-	if err := c.Do(ctx, req, r); err != nil {
+	if err = c.Do(ctx, req, r); err != nil {
 		return nil, err
 	}
 
@@ -153,7 +163,11 @@ type GetAnnotationQueueItemsOptions struct {
 }
 
 // GetAnnotationQueueItems returns items in an annotation queue.
-func (c *Client) GetAnnotationQueueItems(ctx context.Context, queueID string, opts *GetAnnotationQueueItemsOptions) (*GetAnnotationQueueItemsOutput, error) {
+func (c *Client) GetAnnotationQueueItems(
+	ctx context.Context,
+	queueID string,
+	opts *GetAnnotationQueueItemsOptions,
+) (*GetAnnotationQueueItemsOutput, error) {
 	path := fmt.Sprintf("/api/public/annotation-queues/%s/items", queueID)
 	if opts != nil {
 		var err error
@@ -169,7 +183,7 @@ func (c *Client) GetAnnotationQueueItems(ctx context.Context, queueID string, op
 	}
 
 	r := new(GetAnnotationQueueItemsOutput)
-	if err := c.Do(ctx, req, r); err != nil {
+	if err = c.Do(ctx, req, r); err != nil {
 		return nil, err
 	}
 
@@ -183,7 +197,11 @@ type CreateAnnotationQueueItemInput struct {
 }
 
 // CreateAnnotationQueueItem adds a trace/observation to an annotation queue.
-func (c *Client) CreateAnnotationQueueItem(ctx context.Context, queueID string, input *CreateAnnotationQueueItemInput) (*AnnotationQueueItem, error) {
+func (c *Client) CreateAnnotationQueueItem(
+	ctx context.Context,
+	queueID string,
+	input *CreateAnnotationQueueItemInput,
+) (*AnnotationQueueItem, error) {
 	path := fmt.Sprintf("/api/public/annotation-queues/%s/items", queueID)
 
 	req, err := c.NewRequest("POST", path, input)
@@ -192,7 +210,7 @@ func (c *Client) CreateAnnotationQueueItem(ctx context.Context, queueID string, 
 	}
 
 	r := new(AnnotationQueueItem)
-	if err := c.Do(ctx, req, r); err != nil {
+	if err = c.Do(ctx, req, r); err != nil {
 		return nil, err
 	}
 
