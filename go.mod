@@ -1,8 +1,5 @@
-module github.com/henomis/langfuse-go
+module github.com/kenzo0107/langfuse-go
 
-go 1.21.1
+go 1.22
 
-require (
-	github.com/google/uuid v1.6.0
-	github.com/henomis/restclientgo v1.2.0
-)
+require github.com/google/go-querystring v1.2.0
