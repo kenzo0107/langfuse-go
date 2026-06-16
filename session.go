@@ -21,16 +21,6 @@ type SessionDetail struct {
 	Traces    []*Trace  `json:"traces"`
 }
 
-// Trace is a minimal trace reference returned inside a session.
-type Trace struct {
-	ID        string    `json:"id"`
-	Name      *string   `json:"name,omitempty"`
-	SessionID *string   `json:"sessionId,omitempty"`
-	UserID    *string   `json:"userId,omitempty"`
-	CreatedAt time.Time `json:"createdAt"`
-	UpdatedAt time.Time `json:"updatedAt"`
-}
-
 // GetSessionsOutput is the response for listing sessions.
 type GetSessionsOutput struct {
 	Data []*Session  `json:"data"`

@@ -160,3 +160,101 @@ func (c *Client) DeleteScore(ctx context.Context, scoreID string) error {
 
 	return c.Do(ctx, req, nil)
 }
+
+// GetScoresV2Options are the query parameters for listing scores (v2).
+type GetScoresV2Options struct {
+	Page          *int       `url:"page,omitempty"`
+	Limit         *int       `url:"limit,omitempty"`
+	UserID        *string    `url:"userId,omitempty"`
+	Name          *string    `url:"name,omitempty"`
+	FromTimestamp *time.Time `url:"fromTimestamp,omitempty"`
+	ToTimestamp   *time.Time `url:"toTimestamp,omitempty"`
+	Source        *string    `url:"source,omitempty"`
+	ConfigID      *string    `url:"configId,omitempty"`
+	TraceID       *string    `url:"traceId,omitempty"`
+	SessionID     *string    `url:"sessionId,omitempty"`
+	ObservationID *string    `url:"observationId,omitempty"`
+	DataType      *string    `url:"dataType,omitempty"`
+}
+
+// GetScoresV2 returns a paginated list of scores (v2).
+func (c *Client) GetScoresV2(ctx context.Context, opts *GetScoresV2Options) (*GetScoresOutput, error) {
+	path := "/api/public/v2/scores"
+	if opts != nil {
+		var err error
+		path, err = c.AddOptions(path, opts)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	req, err := c.NewRequest("GET", path, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	r := new(GetScoresOutput)
+	if err = c.Do(ctx, req, r); err != nil {
+		return nil, err
+	}
+
+	return r, nil
+}
+
+// GetScoreV2 returns a single score by ID (v2).
+func (c *Client) GetScoreV2(ctx context.Context, scoreID string) (*Score, error) {
+	path := fmt.Sprintf("/api/public/v2/scores/%s", scoreID)
+
+	req, err := c.NewRequest("GET", path, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	r := new(Score)
+	if err = c.Do(ctx, req, r); err != nil {
+		return nil, err
+	}
+
+	return r, nil
+}
+
+// GetScoresV3Options are the query parameters for listing scores (v3) with advanced filtering.
+type GetScoresV3Options struct {
+	Page          *int       `url:"page,omitempty"`
+	Limit         *int       `url:"limit,omitempty"`
+	UserID        *string    `url:"userId,omitempty"`
+	Name          *string    `url:"name,omitempty"`
+	FromTimestamp *time.Time `url:"fromTimestamp,omitempty"`
+	ToTimestamp   *time.Time `url:"toTimestamp,omitempty"`
+	Source        *string    `url:"source,omitempty"`
+	ConfigID      *string    `url:"configId,omitempty"`
+	TraceID       *string    `url:"traceId,omitempty"`
+	SessionID     *string    `url:"sessionId,omitempty"`
+	ObservationID *string    `url:"observationId,omitempty"`
+	DataType      *string    `url:"dataType,omitempty"`
+	Environment   *string    `url:"environment,omitempty"`
+}
+
+// GetScoresV3 returns a paginated list of scores with advanced filtering (v3).
+func (c *Client) GetScoresV3(ctx context.Context, opts *GetScoresV3Options) (*GetScoresOutput, error) {
+	path := "/api/public/v3/scores"
+	if opts != nil {
+		var err error
+		path, err = c.AddOptions(path, opts)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	req, err := c.NewRequest("GET", path, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	r := new(GetScoresOutput)
+	if err = c.Do(ctx, req, r); err != nil {
+		return nil, err
+	}
+
+	return r, nil
+}

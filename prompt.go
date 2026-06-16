@@ -172,3 +172,37 @@ func (c *Client) CreateChatPrompt(ctx context.Context, input *CreateChatPromptIn
 
 	return r, nil
 }
+
+// DeletePrompt deletes all versions of a prompt by name.
+func (c *Client) DeletePrompt(ctx context.Context, promptName string) error {
+	path := fmt.Sprintf("/api/public/v2/prompts/%s", promptName)
+
+	req, err := c.NewRequest("DELETE", path, nil)
+	if err != nil {
+		return err
+	}
+
+	return c.Do(ctx, req, nil)
+}
+
+// UpdatePromptVersionInput is the request body for updating a prompt version's labels.
+type UpdatePromptVersionInput struct {
+	NewLabels []string `json:"newLabels"`
+}
+
+// UpdatePromptVersion updates the labels on a specific prompt version.
+func (c *Client) UpdatePromptVersion(ctx context.Context, name string, version int, input *UpdatePromptVersionInput) (*Prompt, error) {
+	path := fmt.Sprintf("/api/public/v2/prompts/%s/versions/%d", name, version)
+
+	req, err := c.NewRequest("PATCH", path, input)
+	if err != nil {
+		return nil, err
+	}
+
+	r := new(Prompt)
+	if err = c.Do(ctx, req, r); err != nil {
+		return nil, err
+	}
+
+	return r, nil
+}

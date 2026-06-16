@@ -228,3 +228,101 @@ func (c *Client) DeleteAnnotationQueueItem(ctx context.Context, queueID, itemID 
 
 	return c.Do(ctx, req, nil)
 }
+
+// GetAnnotationQueueItem returns a single queue item by ID.
+func (c *Client) GetAnnotationQueueItem(ctx context.Context, queueID, itemID string) (*AnnotationQueueItem, error) {
+	path := fmt.Sprintf("/api/public/annotation-queues/%s/items/%s", queueID, itemID)
+
+	req, err := c.NewRequest("GET", path, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	r := new(AnnotationQueueItem)
+	if err = c.Do(ctx, req, r); err != nil {
+		return nil, err
+	}
+
+	return r, nil
+}
+
+// UpdateAnnotationQueueItemInput is the request body for updating a queue item's status.
+type UpdateAnnotationQueueItemInput struct {
+	Status string `json:"status"` // QUEUED | ACTIVE | COMPLETED
+}
+
+// UpdateAnnotationQueueItem updates the status of a queue item.
+func (c *Client) UpdateAnnotationQueueItem(
+	ctx context.Context,
+	queueID, itemID string,
+	input *UpdateAnnotationQueueItemInput,
+) (*AnnotationQueueItem, error) {
+	path := fmt.Sprintf("/api/public/annotation-queues/%s/items/%s", queueID, itemID)
+
+	req, err := c.NewRequest("PATCH", path, input)
+	if err != nil {
+		return nil, err
+	}
+
+	r := new(AnnotationQueueItem)
+	if err = c.Do(ctx, req, r); err != nil {
+		return nil, err
+	}
+
+	return r, nil
+}
+
+// AnnotationQueueAssignment represents a user assignment to an annotation queue.
+type AnnotationQueueAssignment struct {
+	ID        string    `json:"id"`
+	QueueID   string    `json:"queueId"`
+	UserID    string    `json:"userId"`
+	CreatedAt time.Time `json:"createdAt"`
+}
+
+// CreateAnnotationQueueAssignmentInput is the request body for assigning a user to a queue.
+type CreateAnnotationQueueAssignmentInput struct {
+	UserID string `json:"userId"`
+}
+
+// CreateAnnotationQueueAssignment assigns a user to an annotation queue.
+func (c *Client) CreateAnnotationQueueAssignment(
+	ctx context.Context,
+	queueID string,
+	input *CreateAnnotationQueueAssignmentInput,
+) (*AnnotationQueueAssignment, error) {
+	path := fmt.Sprintf("/api/public/annotation-queues/%s/assignments", queueID)
+
+	req, err := c.NewRequest("POST", path, input)
+	if err != nil {
+		return nil, err
+	}
+
+	r := new(AnnotationQueueAssignment)
+	if err = c.Do(ctx, req, r); err != nil {
+		return nil, err
+	}
+
+	return r, nil
+}
+
+// DeleteAnnotationQueueAssignmentInput is the request body for removing a user assignment.
+type DeleteAnnotationQueueAssignmentInput struct {
+	UserID string `json:"userId"`
+}
+
+// DeleteAnnotationQueueAssignment removes a user assignment from an annotation queue.
+func (c *Client) DeleteAnnotationQueueAssignment(
+	ctx context.Context,
+	queueID string,
+	input *DeleteAnnotationQueueAssignmentInput,
+) error {
+	path := fmt.Sprintf("/api/public/annotation-queues/%s/assignments", queueID)
+
+	req, err := c.NewRequest("DELETE", path, input)
+	if err != nil {
+		return err
+	}
+
+	return c.Do(ctx, req, nil)
+}
