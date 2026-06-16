@@ -209,3 +209,159 @@ func (c *Client) DeleteDatasetItem(ctx context.Context, itemID string) error {
 
 	return c.Do(ctx, req, nil)
 }
+
+// DatasetRun represents a named evaluation run over a dataset.
+type DatasetRun struct {
+	ID          string    `json:"id"`
+	Name        string    `json:"name"`
+	Description *string   `json:"description,omitempty"`
+	Metadata    any       `json:"metadata,omitempty"`
+	DatasetID   string    `json:"datasetId"`
+	DatasetName string    `json:"datasetName"`
+	CreatedAt   time.Time `json:"createdAt"`
+	UpdatedAt   time.Time `json:"updatedAt"`
+}
+
+// GetDatasetRunsOutput is the response for listing dataset runs.
+type GetDatasetRunsOutput struct {
+	Data []*DatasetRun `json:"data"`
+	Meta *Pagination   `json:"meta"`
+}
+
+// GetDatasetRunsOptions are the query parameters for listing dataset runs.
+type GetDatasetRunsOptions struct {
+	Page  *int `url:"page,omitempty"`
+	Limit *int `url:"limit,omitempty"`
+}
+
+// GetDatasetRuns returns a paginated list of runs for a dataset.
+func (c *Client) GetDatasetRuns(
+	ctx context.Context, datasetName string, opts *GetDatasetRunsOptions,
+) (*GetDatasetRunsOutput, error) {
+	path := fmt.Sprintf("/api/public/datasets/%s/runs", datasetName)
+	if opts != nil {
+		var err error
+		path, err = c.AddOptions(path, opts)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	req, err := c.NewRequest("GET", path, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	r := new(GetDatasetRunsOutput)
+	if err = c.Do(ctx, req, r); err != nil {
+		return nil, err
+	}
+
+	return r, nil
+}
+
+// GetDatasetRun returns a single dataset run by name.
+func (c *Client) GetDatasetRun(ctx context.Context, datasetName, runName string) (*DatasetRun, error) {
+	path := fmt.Sprintf("/api/public/datasets/%s/runs/%s", datasetName, runName)
+
+	req, err := c.NewRequest("GET", path, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	r := new(DatasetRun)
+	if err = c.Do(ctx, req, r); err != nil {
+		return nil, err
+	}
+
+	return r, nil
+}
+
+// DeleteDatasetRun permanently deletes a dataset run and all its items.
+func (c *Client) DeleteDatasetRun(ctx context.Context, datasetName, runName string) error {
+	path := fmt.Sprintf("/api/public/datasets/%s/runs/%s", datasetName, runName)
+
+	req, err := c.NewRequest("DELETE", path, nil)
+	if err != nil {
+		return err
+	}
+
+	return c.Do(ctx, req, nil)
+}
+
+// DatasetRunItem represents a single item within a dataset run.
+type DatasetRunItem struct {
+	ID             string    `json:"id"`
+	DatasetRunID   string    `json:"datasetRunId"`
+	DatasetRunName string    `json:"datasetRunName"`
+	DatasetItemID  string    `json:"datasetItemId"`
+	TraceID        string    `json:"traceId"`
+	ObservationID  *string   `json:"observationId,omitempty"`
+	CreatedAt      time.Time `json:"createdAt"`
+	UpdatedAt      time.Time `json:"updatedAt"`
+}
+
+// GetDatasetRunItemsOutput is the response for listing dataset run items.
+type GetDatasetRunItemsOutput struct {
+	Data []*DatasetRunItem `json:"data"`
+	Meta *Pagination       `json:"meta"`
+}
+
+// GetDatasetRunItemsOptions are the query parameters for listing dataset run items.
+type GetDatasetRunItemsOptions struct {
+	Page          *string `url:"page,omitempty"`
+	Limit         *string `url:"limit,omitempty"`
+	DatasetRunID  *string `url:"datasetRunId,omitempty"`
+	DatasetItemID *string `url:"datasetItemId,omitempty"`
+}
+
+// GetDatasetRunItems returns a paginated list of dataset run items.
+func (c *Client) GetDatasetRunItems(
+	ctx context.Context, opts *GetDatasetRunItemsOptions,
+) (*GetDatasetRunItemsOutput, error) {
+	path := "/api/public/dataset-run-items"
+	if opts != nil {
+		var err error
+		path, err = c.AddOptions(path, opts)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	req, err := c.NewRequest("GET", path, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	r := new(GetDatasetRunItemsOutput)
+	if err = c.Do(ctx, req, r); err != nil {
+		return nil, err
+	}
+
+	return r, nil
+}
+
+// CreateDatasetRunItemInput is the request body for linking a trace to a dataset run.
+type CreateDatasetRunItemInput struct {
+	DatasetItemID  string  `json:"datasetItemId"`
+	DatasetRunName string  `json:"datasetRunName"`
+	TraceID        string  `json:"traceId"`
+	ObservationID  *string `json:"observationId,omitempty"`
+	RunDescription *string `json:"runDescription,omitempty"`
+	Metadata       any     `json:"metadata,omitempty"`
+}
+
+// CreateDatasetRunItem links a trace (or observation) to a dataset run item.
+func (c *Client) CreateDatasetRunItem(ctx context.Context, input *CreateDatasetRunItemInput) (*DatasetRunItem, error) {
+	req, err := c.NewRequest("POST", "/api/public/dataset-run-items", input)
+	if err != nil {
+		return nil, err
+	}
+
+	r := new(DatasetRunItem)
+	if err = c.Do(ctx, req, r); err != nil {
+		return nil, err
+	}
+
+	return r, nil
+}
