@@ -50,7 +50,9 @@ type GetEvaluationRulesOptions struct {
 }
 
 // GetEvaluationRules returns a paginated list of evaluation rules (unstable API).
-func (c *Client) GetEvaluationRules(ctx context.Context, opts *GetEvaluationRulesOptions) (*GetEvaluationRulesOutput, error) {
+func (c *Client) GetEvaluationRules(
+	ctx context.Context, opts *GetEvaluationRulesOptions,
+) (*GetEvaluationRulesOutput, error) {
 	path := "/api/public/unstable/evaluation-rules"
 	if opts != nil {
 		var err error
@@ -127,7 +129,9 @@ type UpdateEvaluationRuleInput struct {
 }
 
 // UpdateEvaluationRule updates an existing evaluation rule (unstable API).
-func (c *Client) UpdateEvaluationRule(ctx context.Context, ruleID string, input *UpdateEvaluationRuleInput) (*EvaluationRule, error) {
+func (c *Client) UpdateEvaluationRule(
+	ctx context.Context, ruleID string, input *UpdateEvaluationRuleInput,
+) (*EvaluationRule, error) {
 	path := fmt.Sprintf("/api/public/unstable/evaluation-rules/%s", ruleID)
 
 	req, err := c.NewRequest("PATCH", path, input)
@@ -266,7 +270,9 @@ type UpdateEvaluatorInput struct {
 }
 
 // UpdateEvaluator updates an existing evaluator (unstable API).
-func (c *Client) UpdateEvaluator(ctx context.Context, evaluatorID string, input *UpdateEvaluatorInput) (*Evaluator, error) {
+func (c *Client) UpdateEvaluator(
+	ctx context.Context, evaluatorID string, input *UpdateEvaluatorInput,
+) (*Evaluator, error) {
 	path := fmt.Sprintf("/api/public/unstable/evaluators/%s", evaluatorID)
 
 	req, err := c.NewRequest("PATCH", path, input)

@@ -170,7 +170,9 @@ type CreateAPIKeyOutput struct {
 }
 
 // CreateProjectAPIKey creates a new API key for a project.
-func (c *Client) CreateProjectAPIKey(ctx context.Context, projectID string, input *CreateAPIKeyInput) (*CreateAPIKeyOutput, error) {
+func (c *Client) CreateProjectAPIKey(
+	ctx context.Context, projectID string, input *CreateAPIKeyInput,
+) (*CreateAPIKeyOutput, error) {
 	path := fmt.Sprintf("/api/public/projects/%s/apiKeys", projectID)
 
 	req, err := c.NewRequest("POST", path, input)

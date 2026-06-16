@@ -36,7 +36,9 @@ type GetMediaUploadURLOutput struct {
 }
 
 // GetMediaUploadURL requests a presigned URL for uploading a media file.
-func (c *Client) GetMediaUploadURL(ctx context.Context, input *GetMediaUploadURLInput) (*GetMediaUploadURLOutput, error) {
+func (c *Client) GetMediaUploadURL(
+	ctx context.Context, input *GetMediaUploadURLInput,
+) (*GetMediaUploadURLOutput, error) {
 	req, err := c.NewRequest("POST", "/api/public/media", input)
 	if err != nil {
 		return nil, err

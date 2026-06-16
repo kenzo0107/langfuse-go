@@ -63,7 +63,9 @@ type UpsertBlobStorageIntegrationInput struct {
 }
 
 // UpsertBlobStorageIntegration creates or updates a blob storage integration.
-func (c *Client) UpsertBlobStorageIntegration(ctx context.Context, input *UpsertBlobStorageIntegrationInput) (*BlobStorageIntegration, error) {
+func (c *Client) UpsertBlobStorageIntegration(
+	ctx context.Context, input *UpsertBlobStorageIntegrationInput,
+) (*BlobStorageIntegration, error) {
 	req, err := c.NewRequest("PUT", "/api/public/integrations/blob-storage", input)
 	if err != nil {
 		return nil, err

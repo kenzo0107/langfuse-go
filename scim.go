@@ -124,9 +124,9 @@ func (c *Client) DeleteSCIMUser(ctx context.Context, userID string) error {
 
 // SCIMServiceProviderConfig holds the SCIM service provider capabilities.
 type SCIMServiceProviderConfig struct {
-	DocumentationURI string `json:"documentationUri,omitempty"`
-	AuthenticationSchemes []any `json:"authenticationSchemes,omitempty"`
-	Supported             any   `json:"supported,omitempty"`
+	DocumentationURI      string `json:"documentationUri,omitempty"`
+	AuthenticationSchemes []any  `json:"authenticationSchemes,omitempty"`
+	Supported             any    `json:"supported,omitempty"`
 }
 
 // GetSCIMServiceProviderConfig returns the SCIM service provider configuration.

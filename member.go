@@ -76,7 +76,9 @@ func (c *Client) UpsertOrganizationMembership(ctx context.Context, input *Upsert
 }
 
 // DeleteOrganizationMembership removes a member from the organization.
-func (c *Client) DeleteOrganizationMembership(ctx context.Context, input *DeleteMembershipInput) (*DeleteMembershipOutput, error) {
+func (c *Client) DeleteOrganizationMembership(
+	ctx context.Context, input *DeleteMembershipInput,
+) (*DeleteMembershipOutput, error) {
 	req, err := c.NewRequest("DELETE", "/api/public/organizations/memberships", input)
 	if err != nil {
 		return nil, err
@@ -109,7 +111,9 @@ func (c *Client) GetProjectMemberships(ctx context.Context, projectID string) (*
 
 // UpsertProjectMembership adds or updates a member in the specified project.
 // The user must already be a member of the organization.
-func (c *Client) UpsertProjectMembership(ctx context.Context, projectID string, input *UpsertMembershipInput) (*Membership, error) {
+func (c *Client) UpsertProjectMembership(
+	ctx context.Context, projectID string, input *UpsertMembershipInput,
+) (*Membership, error) {
 	path := fmt.Sprintf("/api/public/projects/%s/memberships", projectID)
 
 	req, err := c.NewRequest("PUT", path, input)
@@ -126,7 +130,9 @@ func (c *Client) UpsertProjectMembership(ctx context.Context, projectID string, 
 }
 
 // DeleteProjectMembership removes a member from the specified project.
-func (c *Client) DeleteProjectMembership(ctx context.Context, projectID string, input *DeleteMembershipInput) (*DeleteMembershipOutput, error) {
+func (c *Client) DeleteProjectMembership(
+	ctx context.Context, projectID string, input *DeleteMembershipInput,
+) (*DeleteMembershipOutput, error) {
 	path := fmt.Sprintf("/api/public/projects/%s/memberships", projectID)
 
 	req, err := c.NewRequest("DELETE", path, input)

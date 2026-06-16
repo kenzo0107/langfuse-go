@@ -235,7 +235,9 @@ type GetDatasetRunsOptions struct {
 }
 
 // GetDatasetRuns returns a paginated list of runs for a dataset.
-func (c *Client) GetDatasetRuns(ctx context.Context, datasetName string, opts *GetDatasetRunsOptions) (*GetDatasetRunsOutput, error) {
+func (c *Client) GetDatasetRuns(
+	ctx context.Context, datasetName string, opts *GetDatasetRunsOptions,
+) (*GetDatasetRunsOutput, error) {
 	path := fmt.Sprintf("/api/public/datasets/%s/runs", datasetName)
 	if opts != nil {
 		var err error
@@ -314,7 +316,9 @@ type GetDatasetRunItemsOptions struct {
 }
 
 // GetDatasetRunItems returns a paginated list of dataset run items.
-func (c *Client) GetDatasetRunItems(ctx context.Context, opts *GetDatasetRunItemsOptions) (*GetDatasetRunItemsOutput, error) {
+func (c *Client) GetDatasetRunItems(
+	ctx context.Context, opts *GetDatasetRunItemsOptions,
+) (*GetDatasetRunItemsOutput, error) {
 	path := "/api/public/dataset-run-items"
 	if opts != nil {
 		var err error

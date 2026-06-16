@@ -30,7 +30,9 @@ type GetLLMConnectionsOptions struct {
 }
 
 // GetLLMConnections returns a paginated list of LLM connections.
-func (c *Client) GetLLMConnections(ctx context.Context, opts *GetLLMConnectionsOptions) (*GetLLMConnectionsOutput, error) {
+func (c *Client) GetLLMConnections(
+	ctx context.Context, opts *GetLLMConnectionsOptions,
+) (*GetLLMConnectionsOutput, error) {
 	path := "/api/public/llm-connections"
 	if opts != nil {
 		var err error

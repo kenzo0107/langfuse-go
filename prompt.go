@@ -191,7 +191,9 @@ type UpdatePromptVersionInput struct {
 }
 
 // UpdatePromptVersion updates the labels on a specific prompt version.
-func (c *Client) UpdatePromptVersion(ctx context.Context, name string, version int, input *UpdatePromptVersionInput) (*Prompt, error) {
+func (c *Client) UpdatePromptVersion(
+	ctx context.Context, name string, version int, input *UpdatePromptVersionInput,
+) (*Prompt, error) {
 	path := fmt.Sprintf("/api/public/v2/prompts/%s/versions/%d", name, version)
 
 	req, err := c.NewRequest("PATCH", path, input)
